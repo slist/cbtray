@@ -38,7 +38,7 @@ Icon=cbtray
 Comment=Carbon Black systray agent
 EOF
 ``` 
-
+Logout / Login in your Gnome desktop environment.
 
 ### Test
 
