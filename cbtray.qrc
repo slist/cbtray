@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/cbtray.png</file>
+        <file>images/cbtray_malware.png</file>
+    </qresource>
+</RCC>
