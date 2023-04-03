@@ -8,6 +8,40 @@
 
 * Display all Carbon Black messages in the systray
 
+## How to build on Linux CentOS 7
+
+### Install required packages and source code
+``` sh
+sudo yum install qt5-qtbase qt5-qtbase-devel vim-X11 gcc-c++ qt5-linguist git ImageMagick
+git clone https://github.com/slist/cbtray.git
+```
+
+### Build
+``` sh
+cd cbtray
+qmake-qt5
+make
+``` 
+
+### Install
+
+``` sh
+sudo cp cbtray /usr/local/bin/
+sudo convert images/cbtray.png -resize 24x24 /usr/share/icons/hicolor/24x24/apps/cbtray.png
+sudo chmod +r /usr/share/icons/hicolor/24x24/apps/cbtray.png
+mkdir -p ~/.config/autostart
+cat <<EOF > ~/.config/autostart/cbtray.desktop 
+[Desktop Entry]
+Type=Application
+Name=cbtray
+Exec=/usr/local/bin/cbtray
+Icon=cbtray
+Comment=Carbon Black systray agent
+EOF
+``` 
+Logout / Login in your Gnome desktop environment.
+
+
 ## How to build on Linux Ubuntu 22.04 LTS
 
 ### Install required packages and source code
@@ -41,7 +75,7 @@ EOF
 ``` 
 Logout / Login in your Gnome desktop environment.
 
-### Test
+## Test
 
 You can test cbtray with cctest (Carbon Black EICAR file for Linux):
 ``` sh
@@ -53,7 +87,7 @@ chmod +x cctest
 
 
 
-### Uninstall
+## Uninstall
 
 You can remove it at any time with:
 ``` sh
