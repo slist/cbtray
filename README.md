@@ -29,6 +29,7 @@ make
 sudo cp cbtray /usr/local/bin/
 sudo convert images/cbtray.png -resize 24x24 /usr/share/icons/hicolor/24x24/apps/cbtray.png
 sudo chmod +r /usr/share/icons/hicolor/24x24/apps/cbtray.png
+mkdir -p ~/.config/autostart
 cat <<EOF > ~/.config/autostart/cbtray.desktop 
 [Desktop Entry]
 Type=Application
