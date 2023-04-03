@@ -42,7 +42,7 @@ EOF
 Logout / Login in your Gnome desktop environment.
 
 
-## How to build on Linux Ubuntu 22.04 LTS
+## How to build on Linux Ubuntu 20.04 LTS and 22.04 LTS
 
 ### Install required packages and source code
 ``` sh
