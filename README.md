@@ -46,7 +46,7 @@ Logout / Login in your Gnome desktop environment.
 
 ### Install required packages and source code
 ``` sh
-sudo apt install -y qtcreator qtbase5-dev qt5-qmake imagemagick g++ build-essential
+sudo apt install -y qtcreator qtbase5-dev qt5-qmake imagemagick g++ build-essential git
 git clone https://github.com/slist/cbtray.git
 ```
 
