@@ -3,16 +3,19 @@
 ## What can it do? 
 
 * Monitor /var/log/syslog to find Carbon Black events
-
 * Show message when a new log is found in syslog
-
 * Display all Carbon Black messages in the systray
+
+## Prerequisites
+
+* cbtray has been tested on Ubuntu 20.04, 22.04 and CentOS 7.
+* cbtray needs a graphical user interface to run, it is working well with Gnome and KDE (Lubuntu/LXQt is not supported).
 
 ## How to build on Linux CentOS 7
 
 ### Install required packages and source code
 ``` sh
-sudo yum install qt5-qtbase qt5-qtbase-devel vim-X11 gcc-c++ qt5-linguist git ImageMagick
+sudo yum install qt5-qtbase qt5-qtbase-devel vim-X11 gcc-c++ qt5-linguist git
 git clone https://github.com/slist/cbtray.git
 ```
 
@@ -27,19 +30,16 @@ make
 
 ``` sh
 sudo cp cbtray /usr/local/bin/
-sudo convert images/cbtray.png -resize 24x24 /usr/share/icons/hicolor/24x24/apps/cbtray.png
-sudo chmod +r /usr/share/icons/hicolor/24x24/apps/cbtray.png
 mkdir -p ~/.config/autostart
 cat <<EOF > ~/.config/autostart/cbtray.desktop 
 [Desktop Entry]
 Type=Application
 Name=cbtray
 Exec=/usr/local/bin/cbtray
-Icon=cbtray
 Comment=Carbon Black systray agent
 EOF
 ``` 
-Logout / Login in your Gnome desktop environment.
+Logout / Login in your desktop environment.
 
 
 ## How to build on Linux Ubuntu 20.04 LTS and 22.04 LTS
@@ -73,7 +73,7 @@ Icon=cbtray
 Comment=Carbon Black systray agent
 EOF
 ``` 
-Logout / Login in your Gnome desktop environment.
+Logout / Login in your desktop environment.
 
 ## Test
 
@@ -85,11 +85,9 @@ chmod +x cctest
 ./cctest
 ```
 
-
-
 ## Uninstall
 
-You can remove it at any time with:
+You can remove cbtray at any time with:
 ``` sh
 rm ~/.config/autostart/cbtray.desktop
 ```
@@ -113,3 +111,26 @@ If you have questions, don't hesitate to contact me at slist@vmware.com
 ## License
 
 Use of this software is governed by the license found in LICENSE.md.
+
+## Screenshots
+
+Ubuntu:
+![Ubuntu screenshot](./screenshots/ubuntu.png)
+
+Kubuntu:
+![Kubuntu screenshot](./screenshots/kubuntu.png)
+
+Lubuntu (not supported):
+![Lubuntu screenshot](./screenshots/lubuntu.png)
+
+gnome-session-properties (to enable/disable cbtray at Gnome startup)
+![gnome-session-properties](./screenshots/gnome-session-properties.png)
+
+cbtray:
+![cbtray](./screenshots/cbtray.png)
+
+Malware detected:
+![malware_detected](./screenshots/malware_detected.png)
+
+Message:
+![message](./screenshots/message.png)
