@@ -50,16 +50,20 @@ cbtray::cbtray(QObject * parent)
     trayIconMenu->addAction(logAction);
     trayIconMenu->addSeparator();
     trayIconMenu->addAction(resetAction);
-    trayIconMenu->addSeparator();
-    trayIconMenu->addAction(syslogAction);
+
+    if (syslog_filename != "/var/log/messages") {
+        trayIconMenu->addSeparator();
+        trayIconMenu->addAction(syslogAction);
+    }
+
     trayIconMenu->addSeparator();
     trayIconMenu->addAction(quitAction);
     setContextMenu(trayIconMenu);
 
     const QFileInfo info(syslog_filename);
     if (! info.isReadable()) {
-      qDebug() << syslog_filename << " is not readable";
-      logAction->setText(syslog_filename + " is not readable\n");
+        qDebug() << syslog_filename << " is not readable";
+        logAction->setText(syslog_filename + " is not readable\n");
     }
 
     QTimer *timer = new QTimer(this);
@@ -103,7 +107,9 @@ void cbtray::parse_syslog()
                     line_string = line_string.mid(i+1);
                     qDebug() << line_string;
 
-                    logAction->setText(logAction->text() + line_string + "\n\n");
+                    if (syslog_filename != "/var/log/messages") {
+                        logAction->setText(logAction->text() + line_string + "\n\n");
+                    }
 
                     showMessage("VMware Carbon Black Cloud alert:", line_string, QSystemTrayIcon::Warning);
                     setIcon(QIcon(":/images/cbtray_malware.png"));
