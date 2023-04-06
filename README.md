@@ -171,6 +171,10 @@ Kubuntu:
 Lubuntu (not supported):
 ![Lubuntu screenshot](./screenshots/lubuntu.png)
 
+
+CentOS 7:
+![CentOS7 screenshot](./screenshots/centos7.png)
+
 gnome-session-properties (to enable/disable cbtray at Gnome startup)
 ![gnome-session-properties](./screenshots/gnome-session-properties.png)
 
