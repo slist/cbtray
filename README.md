@@ -2,9 +2,11 @@
 
 ## What can it do? 
 
-* Monitor /var/log/syslog to find Carbon Black events
-* Show message when a new log is found in syslog
+* On Ubuntu, cbtray monitors /var/log/syslog to find Carbon Black events
+* On RedHat/CentOS, cbtray monitors /var/log/messages to find Carbon Black events
+* Show a message when a new log is found in syslog or messages
 * Display all Carbon Black messages in the systray
+* Reset cbtray icon color and cbtray logs
 
 ## Prerequisites
 

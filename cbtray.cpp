@@ -8,17 +8,18 @@
 #include <QTimer>
 #include <QDesktopServices>
 #include <QUrl>
-
+#include <QFileInfo>
 #include "cbtray.h"
 
 static const QString syslog_service_name = "cb-psc-sensor[";
-//static const QString syslog_service_name = "apparmor.systemd["; // Cool to simulate on Ubuntu
 
 cbtray::cbtray(QObject * parent)
     : QSystemTrayIcon{parent},
       syslog_filesize(0),
       syslog_line_number(0)
 {
+    setIcon(QIcon(":/images/cbtray.png"));
+
     cbAction = new QAction("VMware Carbon Black Cloud", this);
     connect(cbAction, SIGNAL(triggered()), this, SLOT(open_cb()));
 
@@ -28,7 +29,16 @@ cbtray::cbtray(QObject * parent)
     resetAction = new QAction("&Reset alerts", this);
     connect(resetAction, SIGNAL(triggered()), this, SLOT(reset()));
 
-    syslogAction = new QAction("&Open /var/log/syslog", this);
+    if (QFile::exists("/var/log/syslog")) {
+        syslog_filename = "/var/log/syslog";
+    } else if (QFile::exists("/var/log/messages")) {
+        syslog_filename = "/var/log/messages";
+    } else {
+        syslog_filename = "no /var/log/syslog and no /var/log/messages on this Linux!";
+        setIcon(QIcon(":/images/cbtray_malware.png"));
+    }
+
+    syslogAction = new QAction("&Open " + syslog_filename, this);
     connect(syslogAction, SIGNAL(triggered()), this, SLOT(open_syslog()));
 
     quitAction = new QAction(tr("&Quit"), this);
@@ -46,7 +56,11 @@ cbtray::cbtray(QObject * parent)
     trayIconMenu->addAction(quitAction);
     setContextMenu(trayIconMenu);
 
-    setIcon(QIcon(":/images/cbtray.png"));
+    const QFileInfo info(syslog_filename);
+    if (! info.isReadable()) {
+      qDebug() << syslog_filename << " is not readable";
+      logAction->setText(syslog_filename + " is not readable\n");
+    }
 
     QTimer *timer = new QTimer(this);
     timer->setInterval(2000); // Every 2 seconds
@@ -57,7 +71,7 @@ cbtray::cbtray(QObject * parent)
 void cbtray::parse_syslog()
 {
     qDebug() << "Open syslog";
-    QFile inputFile("/var/log/syslog");
+    QFile inputFile(syslog_filename);
     qint64 filesize = inputFile.size();
 
     if (filesize == syslog_filesize) {
@@ -98,9 +112,6 @@ void cbtray::parse_syslog()
             }
         }
         inputFile.close();
-    } else {
-        qDebug("Could not open syslog file");
-        setIcon(QIcon(":/images/cbtray_malware.png"));
     }
 }
 
@@ -111,7 +122,7 @@ void cbtray::open_cb()
 
 void cbtray::open_syslog()
 {
-    QDesktopServices::openUrl(QUrl("file:///var/log/syslog"));
+    QDesktopServices::openUrl(QUrl("file://" + syslog_filename));
 }
 
 void cbtray::reset()

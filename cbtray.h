@@ -23,6 +23,7 @@ private:
     QAction *syslogAction;
     QAction *quitAction;
     QMenu *trayIconMenu;
+    QString syslog_filename;
     qint64 syslog_filesize;
     qint64 syslog_line_number; // Last line number we parsed
 
