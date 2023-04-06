@@ -20,15 +20,6 @@ cbtray::cbtray(QObject * parent)
 {
     setIcon(QIcon(":/images/cbtray.png"));
 
-    cbAction = new QAction("VMware Carbon Black Cloud", this);
-    connect(cbAction, SIGNAL(triggered()), this, SLOT(open_cb()));
-
-    logAction = new QAction("", this);
-    logAction->setEnabled(false);
-
-    resetAction = new QAction("&Reset alerts", this);
-    connect(resetAction, SIGNAL(triggered()), this, SLOT(reset()));
-
     if (QFile::exists("/var/log/syslog")) {
         syslog_filename = "/var/log/syslog";
     } else if (QFile::exists("/var/log/messages")) {
@@ -38,6 +29,15 @@ cbtray::cbtray(QObject * parent)
         setIcon(QIcon(":/images/cbtray_malware.png"));
     }
 
+    cbAction = new QAction("VMware Carbon Black Cloud", this);
+    connect(cbAction, SIGNAL(triggered()), this, SLOT(open_cb()));
+
+    logAction = new QAction("", this);
+    logAction->setEnabled(false);
+
+    resetAction = new QAction("&Reset alerts", this);
+    connect(resetAction, SIGNAL(triggered()), this, SLOT(reset()));
+
     syslogAction = new QAction("&Open " + syslog_filename, this);
     connect(syslogAction, SIGNAL(triggered()), this, SLOT(open_syslog()));
 
@@ -46,16 +46,16 @@ cbtray::cbtray(QObject * parent)
 
     trayIconMenu = new QMenu();
     trayIconMenu->addAction(cbAction);
-    trayIconMenu->addSeparator();
-    trayIconMenu->addAction(logAction);
-    trayIconMenu->addSeparator();
-    trayIconMenu->addAction(resetAction);
 
     if (syslog_filename != "/var/log/messages") {
         trayIconMenu->addSeparator();
-        trayIconMenu->addAction(syslogAction);
+        trayIconMenu->addAction(logAction);
     }
 
+    trayIconMenu->addSeparator();
+    trayIconMenu->addAction(resetAction);
+    trayIconMenu->addSeparator();
+    trayIconMenu->addAction(syslogAction);
     trayIconMenu->addSeparator();
     trayIconMenu->addAction(quitAction);
     setContextMenu(trayIconMenu);
@@ -110,7 +110,6 @@ void cbtray::parse_syslog()
                     if (syslog_filename != "/var/log/messages") {
                         logAction->setText(logAction->text() + line_string + "\n\n");
                     }
-
                     showMessage("VMware Carbon Black Cloud alert:", line_string, QSystemTrayIcon::Warning);
                     setIcon(QIcon(":/images/cbtray_malware.png"));
                     return;
