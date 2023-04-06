@@ -52,7 +52,7 @@ Modify rsyslog.conf
 Modify the rule for /var/log/messages, it should look like this:
 ```
 ...
-$umask 0000                 ### Add this to reset the umask#
+$umask 0022                 ### Add this to reset the umask#
 $FileCreateMode 0644        ### Modify this value if you need to set permissions other than 644#
 *.info;mail.none;authpriv.none;cron.none /var/log/messages
 $umask 0077                 ### Add this to set umask back to default, otherwise all files managed by rsyslogd (/eg /var/log/secure) will be created as world readable (644)
