@@ -76,7 +76,7 @@ Logout / Login in your desktop environment.
 
 ***
 ***
-## How to build on Linux Ubuntu 20.04 LTS and 22.04 LTS
+## How to build on Linux Ubuntu 20.04 LTS, 22.04 LTS, 22.10.
 
 ### Install required packages and source code
 ``` sh
