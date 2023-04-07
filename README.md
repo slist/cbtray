@@ -184,5 +184,5 @@ cbtray:
 Malware detected:
 ![malware_detected](./screenshots/malware_detected.png)
 
-Message:
-![message](./screenshots/message.png)
+Menu:
+![menu](./screenshots/menu.png)
