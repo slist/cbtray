@@ -25,7 +25,7 @@ private:
     QMenu *trayIconMenu;
     QString syslog_filename;
     qint64 syslog_filesize;
-    qint64 syslog_line_number; // Last line number we parsed
+    qint64 syslog_line_number; // Last syslog line number parsed
 
 public slots:
     void parse_syslog();

@@ -122,7 +122,7 @@ void cbtray::parse_syslog()
 
 void cbtray::open_cb()
 {
-    QDesktopServices::openUrl(QUrl("https://carbonblack.vmware.com"));
+    QDesktopServices::openUrl(QUrl("https://carbonblack.vmware.com")); // Carbon Black TechZone
 }
 
 void cbtray::open_syslog()
