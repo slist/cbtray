@@ -1,0 +1,46 @@
+name: Linux Qt5 Release
+
+on:
+  push:
+    branches:
+      - 'master'
+    tags:
+      - 'v*'
+  pull_request:
+    branches:
+    - 'master'
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  SOURCE_DIR:   ${{ github.workspace }}
+  QT_VERSION:   5.15.2
+  ARTIFACT:     cbtray-build.AppImage
+
+jobs:
+  build:
+    runs-on:  ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version:      ${{ env.QT_VERSION }}
+          setup-python: false
+              
+      - name: Create build directory
+        run:  mkdir ${{ env.SOURCE_DIR }}/build
+
+      - name: Build
+        working-directory: ${{ env.SOURCE_DIR }}/build
+        run:  |
+              qmake -r ${{ env.SOURCE_DIR }}/cbtray.pro
+              make -j`nproc`
+              
