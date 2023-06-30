@@ -33,7 +33,7 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v3.2.1
         with:
-          version:      ${{ env.QT_VERSION }}
+          version: ${{ env.QT_VERSION }}
           setup-python: false
               
       - name: Create build directory
@@ -44,4 +44,4 @@ jobs:
         run:  |
               qmake -r ${{ env.SOURCE_DIR }}/cbtray.pro
               make -j`nproc`
-              
+
