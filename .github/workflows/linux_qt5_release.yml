@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - 'master'
+      - 'main'
     tags:
       - 'v*'
   pull_request:
@@ -25,12 +26,12 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.5.3
         with:
           submodules: recursive
 
       - name: Install Qt
-        uses: jurplel/install-qt-action@v3
+        uses: jurplel/install-qt-action@v3.2.1
         with:
           version:      ${{ env.QT_VERSION }}
           setup-python: false
